@@ -53,6 +53,111 @@ Skip any of these and you have confident-sounding nonsense — the most expensiv
 
 ---
 
+## <span style="color:green">[Opus 4.8]</span> Deep dive: "84% accuracy" vs "84% (95% CI: 78–89%)"
+
+This unpacks Key Takeaway #4 line by line, because it is the single most important reporting habit in the course.
+
+### Why "84% accuracy" is only half a fact
+
+Sarah hand-labelled **200 reviews** and her model got **168 of them right**: 168 / 200 = **0.84 = 84%**. That 84% is a **point estimate** — one number computed from one sample.
+
+The problem: those 200 reviews are just *one* draw from the millions Sarah could have picked. A *different* 200 reviews would have given a slightly different number — maybe 82%, maybe 86%. So 84% silently hides the question Priya actually cares about: *how close is this to the model's **true** accuracy on all reviews?* Reported alone, 84% **looks identical** whether it came from 20 reviews or 20,000 — yet those two deserve wildly different levels of trust. That missing precision is the "other half" of the fact.
+
+### What the "(95% CI: 78–89%)" adds
+
+The confidence interval is the **plausible range for the true accuracy**, given the sample size. "84% (95% CI: 78–89%)" reads as:
+
+> *"My best single guess is 84%, and the true accuracy is most likely somewhere between 78% and 89%."*
+
+The width of that range (about ±5 points) is a direct readout of **how much to trust the 84%**. Narrow CI → solid number. Wide CI → treat with caution. (For what the "95%" itself means — a property of the *method*, not this one interval — see Key Takeaway #5.)
+
+### Where 78–89% comes from (the actual arithmetic)
+
+For a proportion, the **standard error** (the typical sample-to-sample wobble) is:
+
+```
+SE = √( p·(1−p) / n )  =  √( 0.84 × 0.16 / 200 )  =  √0.000672  ≈  0.0259  =  2.59%
+```
+
+A 95% CI reaches out **1.96 standard errors** on each side (1.96 is the Z-score that brackets the middle 95% of a normal curve — the same standard-normal areas from the `02_distributions` notebook):
+
+```
+margin of error = 1.96 × SE = 1.96 × 2.59%  ≈  5.1%
+95% CI = 84% ± 5.1%  =  78.9%  to  89.1%   →  rounded to 78–89%
+```
+
+So the interval is not a guess — it falls straight out of two inputs: **the estimate (84%)** and **the sample size (200)**.
+
+### "Halve the width → quadruple the sample" — why uncertainty has a price
+
+Notice `n` sits **under a square root** in the SE formula. That means the margin of error shrinks with `√n`, not with `n`. To make the interval **half as wide**, you must cut the SE in half, which needs **4× the data**:
+
+| Sample size `n` | Margin of error (±) | 95% CI around 84% |
+|---|---|---|
+| 200 | ±5.1% | 78.9 – 89.1% |
+| 800 (×4) | ±2.5% | 81.5 – 86.5% |
+| 3,200 (×16) | ±1.3% | 82.7 – 85.3% |
+
+Going from 200 → 800 reviews (4× the hand-labelling effort) only buys you *half* the uncertainty. This is the "diminishing returns" of data: the first few hundred labels are cheap and hugely informative; squeezing the interval tighter gets expensive fast. That trade-off — **precision costs effort, quadratically** — is exactly what Takeaway #4 means by "uncertainty has a price."
+
+### The one-sentence version for an executive
+
+> *"On 200 hand-checked reviews the model was right 84% of the time; allowing for the small sample, the true accuracy is most likely between 78% and 89%."*
+
+---
+
+## <span style="color:green">[Opus 4.8]</span> Deep dive: the p-value, and why the cut-off is 0.05
+
+This unpacks Key Takeaway #6. We'll use Sarah's running example: NorthStar emails an **apology coupon** to some complaining customers (treatment) and not others (control), then compares complaint rates. The A/B test returns **p = 0.038**.
+
+### What a p-value actually is
+
+A p-value always starts from a deliberately boring assumption called the **null hypothesis (H₀): "there is no real effect — the coupon changes nothing, and any gap we see is just luck of the draw."**
+
+The p-value then answers **one precise question:**
+
+> *"If the coupon truly did nothing, how often would pure random chance still produce a difference at least as big as the one I measured?"*
+
+So **p = 0.038 means: "If the coupon had zero effect, a result this large (or larger) would happen by chance only 3.8% of the time."** That is rare enough to make the "it was just luck" story hard to believe — so we doubt the null and conclude the coupon probably *does* something.
+
+**Read the definition carefully — it is the most misread number in statistics:**
+- ✅ p = P(data this extreme **given** the null is true).
+- ❌ p is **not** the probability the null is true. "p = 0.038" does **not** mean "3.8% chance the coupon has no effect." It assumes the null and asks about the *data*, not the other way round.
+- ❌ p is **not** the size of the effect. A tiny p can sit on a trivial effect (see Takeaway #7). It measures *evidence against "pure chance,"* not *importance*.
+
+### How the number is computed (in one breath)
+
+You measure the gap between the two groups, divide it by how much gap random sampling alone would typically produce (the standard error), and get a **test statistic**. The p-value is then the **tail area** of that statistic's distribution — literally the same "area in the tail of the curve" idea from the `02_distributions` notebook, just applied to the difference between two groups. Bigger measured gap, or bigger sample → statistic lands further into the tail → smaller p.
+
+### Why 0.05? Convention, **not** calculation
+
+This is the key thing to internalise: **0.05 is a chosen threshold, not a result the data computes.** It is the **significance level (α)** — a line *you* draw **before** running the test to decide how much "could be chance" risk you're willing to tolerate.
+
+- Its origin is historical convenience, not mathematics: statistician **Ronald Fisher** popularised 0.05 in the 1920s simply as a round, reasonable "1 in 20" cut-off. There is no law of nature at 0.05.
+- It is **arbitrary and context-dependent.** Particle physicists demand p < 0.0000003 (the "5-sigma" rule) before claiming a discovery; a low-stakes marketing test might accept 0.10. The right α depends on the **cost of a false alarm** versus the **cost of missing a real effect.**
+- It must be fixed **in advance.** Picking the threshold *after* seeing the p-value (e.g. "0.07, let's just call the line 0.08") is a form of cheating called **p-hacking.**
+
+So in our example the logic is: *we decided beforehand α = 0.05; the data produced p = 0.038; since 0.038 < 0.05, we cross the line we drew.*
+
+### `p < 0.05` vs `p ≥ 0.05` — and the asymmetry that trips everyone up
+
+| Outcome | Verdict | Plain English |
+|---|---|---|
+| **p < 0.05** (e.g. 0.038) | **Reject H₀** | "Chance alone is an unconvincing explanation. We have statistically significant evidence of an effect." |
+| **p ≥ 0.05** (e.g. 0.12) | **Fail to reject H₀** | "Chance *could* plausibly explain this. We don't have enough evidence to claim an effect." |
+
+The trap is the second row. **"Fail to reject" is not "prove there's no effect."** Absence of evidence ≠ evidence of absence. A p of 0.12 can happen because the coupon genuinely does nothing **or** because the effect is real but the sample was too small to detect it (an under-powered test). The honest sentence is:
+
+> *"We did not find statistically significant evidence of an effect at the 0.05 level"* — never *"we proved the coupon does nothing."*
+
+Note the deliberate wording in Takeaway #6: **"reject"** on one side, but only **"not enough evidence to reject"** on the other. Statistics can disconfirm the no-effect story; it can never fully confirm it.
+
+### The one-sentence version for an executive
+
+> *"If the coupon really did nothing, we'd see a swing this big only about 4% of the time — that's unlikely enough that we believe the coupon genuinely helps. (Next question: is the effect big enough to be worth it?)"*
+
+---
+
 ## Check your understanding
 
 Work through these after finishing the three Part notebooks. Attempt each question on your own first.
