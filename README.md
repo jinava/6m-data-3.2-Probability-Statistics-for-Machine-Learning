@@ -62,7 +62,7 @@ This lesson follows a three-phase flow. Work through the phases in order.
 **Start here →** [**pre-class.md**](./pre-class.md)
 
 You will:
-- Open and run `notebooks/01_monday_morning.ipynb` (~15 min) — Sarah's Monday morning, Priya's pushback, mean vs median
+- Open and run [`notebooks/01_monday_morning.ipynb`](./notebooks/01_monday_morning.ipynb) (~15 min) — Sarah's Monday morning, Priya's pushback, mean vs median
 - Reflect on what surprised you
 - Watch two short videos and preview the key concepts
 - Try three mini-exercises with sample answers

@@ -218,7 +218,8 @@ section::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;bac
 .node:last-child{border-right:0}
 .node .ix{position:absolute;top:10px;left:12px;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;color:var(--ink-soft)}
 .node .ttl{font-family:'Open Sans',sans-serif;font-style:italic;font-weight:300;font-size:20px;letter-spacing:-.01em;line-height:1.05}
-.node .sub{font-family:'Open Sans',sans-serif;font-size:13px;color:var(--ink-2);margin-top:4px;display:none}
+.node .sub{font-family:'Open Sans',sans-serif;font-size:13px;color:var(--ink-2);margin-top:0;display:none;position:absolute;bottom:0;left:-1px;right:-1px;background:var(--paper);border:1px solid var(--border);border-top:2px solid var(--ntu-crimson);padding:8px 14px;z-index:20;line-height:1.4}
+.node.is-now .sub{background:var(--ntu-crimson);color:#fff;border-color:rgba(0,0,0,.15)}
 .node:hover .sub{display:block}
 .node.is-now{background:var(--accent);color:var(--paper)}
 .node.is-now .ix,.node.is-now .sub{color:#ffe1d3}
@@ -363,7 +364,7 @@ code,.mono{font-size:.95em!important}
   <div class="masthead-row">
     <div>
       <div class="dateline">M3 &middot; Module Three &middot; Machine Learning &amp; GenAI</div>
-      <div class="masthead-title">How Sure <span class="italic">Are</span> We?<sup>L02</sup></div>
+      <div class="masthead-title">How <span class="italic">Sure</span> Are We?<sup>L02</sup></div>
     </div>
     <div class="masthead-meta">
       <span class="tag">Interactive &middot; Field Notes</span>
@@ -376,8 +377,8 @@ code,.mono{font-size:.95em!important}
   <div class="cover-grid">
     <div>
       <div class="label" style="color:var(--accent)">Chapter Two &middot; The Friday afternoon question</div>
-      <h1>"But how <em>sure</em><br>are we?"</h1>
-      <p class="cover-lede"><span class="dropcap">P</span>riya is reading Sarah's slide deck. The model says 60% of reviews are positive &mdash; a clean number on a clean chart. She squints. <em>But are the positive ones actually positive? How do we know we can trust that number?</em> Sarah doesn't have an answer. This lesson is how she gets one: three lenses for honest numbers &mdash; distributions, confidence intervals, A/B tests.</p>
+      <h1>"But how <em>sure</em> are we?"</h1>
+      <p class="cover-lede"><span class="dropcap">P</span>riya is reading Sarah's slide deck. The model says 60% of reviews are positive &mdash; a clean number on a clean chart. She squints. <em>But are the positive ones actually positive? How do we know we can trust that number?</em> Sarah doesn't have an answer. This lesson is how she gets one: three lenses for honest numbers &mdash; distributions, confidence intervals, hypothesis tests.</p>
     </div>
     <div class="cover-side">
       <div class="fact-strip">
@@ -406,6 +407,9 @@ code,.mono{font-size:.95em!important}
     </div>
   </div>
 
+  <div style="background:var(--bg-off);border:1px solid var(--border);border-left:4px solid var(--ntu-crimson);padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:1rem;line-height:1.65;color:var(--text-body)">
+    <strong>Quick reminders:</strong> The <em>mean</em> is the arithmetic average — sum of all values divided by the count. The <em>median</em> is the middle value when values are sorted from lowest to highest. The <em>standard deviation</em> measures how spread out values are around the mean — a small SD means values cluster tightly; a large SD means they are widely spread. When data is skewed, mean and median diverge — and that gap is the story.
+  </div>
   <div class="dist">
     <div>
       <div class="dist-pick" id="distPick">
@@ -434,9 +438,9 @@ code,.mono{font-size:.95em!important}
   <div class="section-head">
     <div class="section-num">II.</div>
     <div class="section-title">
-      <div class="label">A second lens</div>
+      <div class="label">Extension topic &middot; A second lens</div>
       <h2>Z-scores. The universal <em>anomaly meter.</em></h2>
-      <p class="deck"><span class="mono">z = (value &minus; mean) / sd</span> normalises "is this unusual?" across any scale. The working rule: <span class="mono">|z| &gt; 3</span> is an outlier worth a phone call.</p>
+      <p class="deck"><span class="mono">z = (value &minus; &mu;) / &sigma;</span> — here &mu; (mu) is the population mean and &sigma; (sigma) is the standard deviation — normalises "is this unusual?" across any scale. The working rule: <span class="mono">|z| &gt; 3</span> is an outlier worth checking.</p>
     </div>
   </div>
 
@@ -446,11 +450,17 @@ code,.mono{font-size:.95em!important}
       <div class="zlab-row"><label>Population mean (&mu;)</label><input type="number" id="zMean" value="3.2" step="0.1"></div>
       <div class="zlab-row"><label>Standard deviation (&sigma;)</label><input type="number" id="zSd" value="0.8" step="0.1"></div>
       <div class="zlab-presets">
-        <button class="preset" data-p="return">&#9656; Return rate 5.6% &middot; &mu;=3.2 &middot; &sigma;=0.8</button>
-        <button class="preset" data-p="latency">&#9656; Latency spike 410ms &middot; &mu;=320 &middot; &sigma;=22</button>
-        <button class="preset" data-p="normal">&#9656; A boring day &middot; value=3.4</button>
+        <button class="preset" data-p="returns">&#9656; NorthStar return rate 5.6% &middot; &mu;=3.2 &middot; &sigma;=0.8</button>
+        <button class="preset" data-p="orders">&#9656; High avg order value £85 &middot; &mu;=67 &middot; &sigma;=12</button>
+        <button class="preset" data-p="conversion">&#9656; Normal conversion rate 4.2% &middot; &mu;=4.0 &middot; &sigma;=0.15</button>
       </div>
-      <p style="font-family:'Newsreader',serif;font-style:italic;color:var(--ink-2);font-size:15px;margin-top:14px;line-height:1.5">In a normal distribution, only about <b>0.27%</b> of observations sit further than 3&sigma; from the mean &mdash; roughly one day per year of business.</p>
+      <p style="font-family:'Open Sans',sans-serif;color:var(--text-dim);font-size:.92rem;margin-top:14px;line-height:1.6">In a normal distribution, only about <b>0.27%</b> of observations sit further than 3&sigma; from the mean &mdash; roughly one day per year of business. Use the bands below as a guide.</p>
+      <table style="width:100%;margin-top:10px;border-collapse:collapse;font-size:.85rem;font-family:'JetBrains Mono',monospace">
+        <tr style="background:var(--bg-off)"><td style="padding:5px 8px;border:1px solid var(--border)">|z| &lt; 1</td><td style="padding:5px 8px;border:1px solid var(--border)">Within 1&sigma; — 68% of values live here. Entirely normal.</td></tr>
+        <tr><td style="padding:5px 8px;border:1px solid var(--border)">1 &le; |z| &lt; 2</td><td style="padding:5px 8px;border:1px solid var(--border)">Mild deviation — worth a glance, not an alert.</td></tr>
+        <tr style="background:var(--bg-off)"><td style="padding:5px 8px;border:1px solid var(--border)">2 &le; |z| &lt; 3</td><td style="padding:5px 8px;border:1px solid var(--border)">Suspicious — only ~4.5% of values land here. Investigate the source.</td></tr>
+        <tr><td style="padding:5px 8px;border:1px solid var(--border);color:var(--ntu-crimson);font-weight:700">|z| &ge; 3</td><td style="padding:5px 8px;border:1px solid var(--border);color:var(--ntu-crimson)">Outlier — &lt;0.27% of values. Worth checking immediately.</td></tr>
+      </table>
     </div>
 
     <div class="zlab-out">
@@ -468,9 +478,10 @@ code,.mono{font-size:.95em!important}
   <div class="section-head">
     <div class="section-num">III.</div>
     <div class="section-title">
-      <div class="label">A third lens</div>
+      <div class="label">Extension topic &middot; A third lens</div>
       <h2>The <em>Central Limit Theorem</em> &mdash; the engine.</h2>
-      <p class="deck">Even when the raw data is messy &mdash; skewed, bimodal, ugly &mdash; the <em>distribution of sample means</em> converges to a bell. That is why statistics works on real-world data. Draw samples below and watch it happen.</p>
+      <p class="deck">Even when the raw data is messy &mdash; skewed, bimodal, or irregular &mdash; the <em>distribution of sample means</em> converges to a bell curve as sample size grows. That is why statistics works on real-world data. Draw samples below and watch it happen.</p>
+      <p class="deck" style="margin-top:.5rem">Why does this matter? Once sample means follow a normal distribution, you can calculate <em>standard errors</em>, build <em>confidence intervals</em>, and run <em>hypothesis tests</em> &mdash; even when the raw data is far from normal. This is the theoretical foundation that makes the tools in Sections IV and V work.</p>
     </div>
   </div>
 
@@ -478,18 +489,19 @@ code,.mono{font-size:.95em!important}
     <div class="clt-col">
       <h3>The <em>raw data</em> &middot; very right-skewed</h3>
       <svg class="clt-svg" id="cltRaw" viewBox="0 0 600 200" preserveAspectRatio="none"></svg>
-      <p class="clt-note">Imagine NorthStar order amounts: most under &pound;100, a long tail to &pound;10,000+. Nothing remotely bell-shaped.</p>
+      <p class="clt-note">NorthStar order amounts: most under &pound;100, a long tail to &pound;10,000+. Nothing remotely bell-shaped. We cannot apply normal-distribution formulas to this directly.</p>
     </div>
     <div class="clt-col">
       <h3>The <em>sample means</em> &middot; one dot per draw</h3>
       <svg class="clt-svg" id="cltMean" viewBox="0 0 600 200" preserveAspectRatio="none"></svg>
       <div class="clt-ctrl">
-        <button class="clt-btn" id="cltDraw1">Draw 1 sample (n = 30)</button>
-        <button class="clt-btn" id="cltDraw50">Draw 50</button>
+        <button class="clt-btn" id="cltDraw1">Draw next sample (n = 30)</button>
+        <button class="clt-btn" id="cltDrawAnim">Watch 30 draws</button>
+        <button class="clt-btn" id="cltDraw50">Draw 50 at once</button>
         <button class="clt-btn alt" id="cltReset">Reset</button>
         <span class="clt-stat" id="cltStat">samples drawn: 0</span>
       </div>
-      <p class="clt-note">After ~30 draws a bell begins to appear. After ~100, it's unmistakable. The CLT is not metaphor &mdash; you are watching it.</p>
+      <p class="clt-note">After ~30 draws a bell begins to appear. After ~100, it is unmistakable. The CLT is not metaphor &mdash; you are watching it. Once the sample means are normal, we can apply standard error and CI formulas to them.</p>
     </div>
   </div>
 </section>
@@ -501,7 +513,8 @@ code,.mono{font-size:.95em!important}
     <div class="section-title">
       <div class="label">A reporting rule</div>
       <h2>Every number from a sample owes you a <em>range.</em></h2>
-      <p class="deck">"84% accuracy" is half a fact. "84% (95% CI: 78&ndash;89%) on 200 hand-labelled reviews" is the honest version. Slide the sample size below &mdash; uncertainty has a price, and that price is roughly: <em>quadruple n to halve the width.</em></p>
+      <p class="deck">"84% accuracy" is half a fact. "84% (95% CI: 78&ndash;89%) on 200 hand-labelled reviews" is the honest version. Slide the sample size below &mdash; reducing uncertainty has a price, and that price is roughly: <em>quadruple n to halve the width.</em></p>
+      <p class="deck" style="margin-top:.5rem">Why? Each additional data point gives the estimate a little more stability. With more observations, the random variation in any one sample matters less, so the range of plausible values narrows. Formally, the margin of error shrinks with the <em>square root of n</em> &mdash; which is why doubling n only shrinks the interval by about 30%, not 50%.</p>
     </div>
   </div>
 
@@ -529,8 +542,8 @@ code,.mono{font-size:.95em!important}
     <div class="section-num">V.</div>
     <div class="section-title">
       <div class="label">A decision lens</div>
-      <h2>A/B testing. <em>p-values</em> are half the story.</h2>
-      <p class="deck">A p-value answers "could chance produce this difference?" But statistical significance is not practical significance. Slide the two dimensions and read the quadrant.</p>
+      <h2>Hypothesis testing. <em>p-values</em> are half the story.</h2>
+      <p class="deck">A p-value answers "could chance produce this difference?" But statistical significance is not practical significance. Slide the two dimensions and read the quadrant. The coupon experiment: H₀ = no effect on 30-day repurchase rate.</p>
     </div>
   </div>
 
@@ -656,8 +669,8 @@ code,.mono{font-size:.95em!important}
 
     <div class="qa" data-qn="Q7">
       <span class="hint">&#9656; Click to reveal</span>
-      <b>Design an A/B test for the "easy returns" banner.</b>
-      <div class="a"><b>Control:</b> no banner. <b>Treatment:</b> random users see the banner. <b>Outcome:</b> 30-day return rate (one metric &mdash; not three at once). <b>Works if:</b> treatment return rate is lower with p &lt; 0.05 <em>and</em> the effect size justifies the build cost. A 0.1pp vs a 3pp drop have very different implications.</div>
+      <b>Design a hypothesis test for the "easy returns" banner. State H₀, H₁, the outcome metric, and what makes the result actionable.</b>
+      <div class="a"><b>H₀:</b> the banner has no effect on 30-day return rate. <b>H₁:</b> the banner reduces the 30-day return rate. <b>Control:</b> no banner. <b>Treatment:</b> random users see the banner. <b>Outcome metric:</b> 30-day return rate (one metric &mdash; not three at once). <b>Actionable if:</b> p &lt; 0.05 <em>and</em> the effect size justifies the build cost. A 0.1pp vs a 3pp drop have very different business implications.</div>
     </div>
 
     <div class="qa" data-qn="Q8">
@@ -674,8 +687,8 @@ code,.mono{font-size:.95em!important}
 
     <div class="qa" data-qn="Q10">
       <span class="hint">&#9656; Click to reveal</span>
-      <b>Three numbers to interpret for a non-technical executive: (a) 60% positive (b) 84% acc, CI 78&ndash;89% (c) p = 0.038.</b>
-      <div class="a"><b>(a)</b> "In this week's 10,000 reviews, 60% classified positive &mdash; treat as an estimate, not a precise count; the model occasionally misclassifies borderline cases."<br><b>(b)</b> "Against 200 hand-labelled reviews, the model was right 84% of the time; the true accuracy is most likely between 78% and 89%."<br><b>(c)</b> "Strong statistical evidence that the apology coupon reduces complaints &mdash; results this large would occur by chance less than 4% of the time. Recommend a cautious roll-out."</div>
+      <b>Three numbers to interpret for a non-technical executive: (a) 60% positive (b) 84% acc, CI 78&ndash;89% (c) p &lt; 0.01, effect = +7.5pp repurchase rate.</b>
+      <div class="a"><b>(a)</b> "In this week's 10,000 reviews, 60% classified positive &mdash; treat as an estimate, not a precise count; the model occasionally misclassifies borderline cases."<br><b>(b)</b> "Against 200 hand-labelled reviews, the model was right 84% of the time; the true accuracy is most likely between 78% and 89%."<br><b>(c)</b> "Strong statistical evidence that the apology coupon increases 30-day repurchase rates by approximately 7.5 percentage points &mdash; results this large would occur by chance less than 1% of the time if the coupon had no effect. Whether the coupon cost is justified by the increase in returning customers is a business decision."</div>
     </div>
   </div>
 </section>
@@ -701,7 +714,7 @@ code,.mono{font-size:.95em!important}
     <div class="node"><span class="lens">L02</span><span class="ix">L07</span><span class="ttl">Neural Nets</span><span class="sub">Validation curves are noisy samples &mdash; CIs decide architecture winners.</span></div>
     <div class="node"><span class="lens">L02</span><span class="ix">L08</span><span class="ttl">Vision</span><span class="sub">Test-set accuracy on images is a sample proportion &mdash; same math.</span></div>
     <div class="node"><span class="lens">L02</span><span class="ix">L09</span><span class="ttl">NLP</span><span class="sub">precision@k, recall@k are sampled and need CIs.</span></div>
-    <div class="node"><span class="lens">L02</span><span class="ix">L10</span><span class="ttl">GenAI</span><span class="sub">A/B testing of prompts is the only rigorous way to claim an LLM pipeline improved.</span></div>
+    <div class="node"><span class="lens">L02</span><span class="ix">L10</span><span class="ttl">GenAI</span><span class="sub">Hypothesis testing of prompts is the only rigorous way to claim an LLM pipeline improved.</span></div>
   </div>
 </section>
 
@@ -808,26 +821,32 @@ code,.mono{font-size:.95em!important}
       const ln = document.createElementNS(NS,'line');
       ln.setAttribute('x1', x); ln.setAttribute('x2', x);
       ln.setAttribute('y1', PAD-6); ln.setAttribute('y2', H-PAD);
-      ln.setAttribute('stroke', color); ln.setAttribute('stroke-width', 2);
-      if (dash) ln.setAttribute('stroke-dasharray','5 4');
+      ln.setAttribute('stroke', color); ln.setAttribute('stroke-width', 3.5);
+      if (dash) ln.setAttribute('stroke-dasharray','6 4');
       svg.appendChild(ln);
     }
     const mx = PAD + ((b.mean - b.lo)/(b.hi-b.lo))*innerW;
     const dx = PAD + ((b.med  - b.lo)/(b.hi-b.lo))*innerW;
     vert(mx, '#cf3a17', false);
     vert(dx, '#0e4540', true);
-    function lbl(x,txt,color){
+    function lbl(x, txt, color, yPos){
+      const bg = document.createElementNS(NS,'rect');
+      bg.setAttribute('x', x+2); bg.setAttribute('y', yPos-13);
+      bg.setAttribute('width', txt.length*7.2+6); bg.setAttribute('height',14);
+      bg.setAttribute('fill','#fff'); bg.setAttribute('opacity','0.88');
+      svg.appendChild(bg);
       const t = document.createElementNS(NS,'text');
-      t.setAttribute('x', x+6); t.setAttribute('y', PAD-2);
+      t.setAttribute('x', x+5); t.setAttribute('y', yPos);
       t.setAttribute('fill', color);
       t.setAttribute('font-family','JetBrains Mono, monospace');
-      t.setAttribute('font-size','11');
-      t.setAttribute('letter-spacing','1.4');
+      t.setAttribute('font-size','10');
+      t.setAttribute('font-weight','700');
+      t.setAttribute('letter-spacing','1');
       t.textContent = txt;
       svg.appendChild(t);
     }
-    lbl(mx, 'MEAN', '#cf3a17');
-    lbl(dx, 'MEDIAN', '#0e4540');
+    lbl(mx, 'MEAN', '#cf3a17', PAD - 4);
+    lbl(dx, 'MEDIAN', '#0e4540', PAD + 11);
 
     dMean.textContent = b.mean.toFixed(1);
     dMed.textContent  = b.med.toFixed(1);
@@ -835,9 +854,9 @@ code,.mono{font-size:.95em!important}
 
     const verdicts = {
       normal:{h:"Mean &asymp; Median. <em>Trust the mean.</em>",b:"Symmetric, bell-shaped. The mean is a faithful summary of the typical case. This is the comfortable world &mdash; and the assumption many tools quietly rely on."},
-      rskew:{h:"Mean is <em>pulled right</em> by the tail.",b:"Classic e-commerce shape: many small orders, a few huge ones. The mean overstates the typical customer. Report the median, or segment small vs corporate accounts."},
-      bimodal:{h:"<em>Two stories</em> in one column.",b:"Two clusters hiding inside an 'average'. Reporting a mean of " + b.mean.toFixed(1) + " describes nobody. Segment the data and report the modes &mdash; or you are averaging apples and oranges."},
-      outliers:{h:"Outliers drag the <em>mean</em>, not the median.",b:"A few extreme values can shift the mean dramatically while the median barely moves. Use Z-scores (next section) to flag them, then decide: investigate, cap, or transform."}
+      rskew:{h:"Mean is <em>pulled right</em> by the tail.",b:"Classic e-commerce shape: most values are small, but the <em>natural structure</em> of the data creates a long tail of large values. This is not a data error &mdash; it is the genuine distribution shape. Because the mean is pulled rightward by the tail, it overstates the typical customer. Report the median, or segment small vs corporate accounts."},
+      bimodal:{h:"<em>Two stories</em> in one column.",b:"Two clusters hiding inside an 'average'. Reporting a combined mean of " + b.mean.toFixed(1) + " describes nobody &mdash; it is likely a value few customers actually represent. Segment the data and report the mean of each group separately &mdash; or you are averaging apples and oranges."},
+      outliers:{h:"Outliers drag the <em>mean</em>, not the median.",b:"Unlike right-skew &mdash; where the long tail is the <em>natural shape</em> of the data &mdash; outliers are a small number of <em>abnormal</em> data points sitting on top of an otherwise normal distribution. The recommended action is different: each flagged outlier should be individually investigated (data error? one-off event? genuine anomaly?) before any capping or removal."}
     };
     const v = verdicts[kind];
     distH.innerHTML = v.h;
@@ -942,9 +961,9 @@ code,.mono{font-size:.95em!important}
   }
   [v,m,s].forEach(el => el.addEventListener('input', update));
   document.querySelectorAll('.zlab-presets .preset').forEach(p => p.addEventListener('click', () => {
-    if (p.dataset.p === 'return'){ v.value=5.6; m.value=3.2; s.value=0.8; }
-    else if (p.dataset.p === 'latency'){ v.value=410; m.value=320; s.value=22; }
-    else if (p.dataset.p === 'normal'){ v.value=3.4; m.value=3.2; s.value=0.8; }
+    if (p.dataset.p === 'returns'){ v.value=5.6; m.value=3.2; s.value=0.8; }
+    else if (p.dataset.p === 'orders'){ v.value=85; m.value=67; s.value=12; }
+    else if (p.dataset.p === 'conversion'){ v.value=4.2; m.value=4.0; s.value=0.15; }
     update();
   }));
   update();
@@ -1034,6 +1053,14 @@ code,.mono{font-size:.95em!important}
     drawMeans();
   }
   document.getElementById('cltDraw1').addEventListener('click', drawSample);
+  document.getElementById('cltDrawAnim').addEventListener('click', () => {
+    let i = 0;
+    const interval = setInterval(() => {
+      drawSample();
+      i++;
+      if (i >= 30) clearInterval(interval);
+    }, 80);
+  });
   document.getElementById('cltDraw50').addEventListener('click', () => {
     for(let i=0;i<50;i++) drawSample();
   });
