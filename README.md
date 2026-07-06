@@ -41,11 +41,12 @@
 
 | Phase | Time | Format |
 |---|---|---|
-| Concept walkthrough | ~90 min | Instructor presents core concepts; learners follow along on the [**interactive key-concepts page**](https://su-ntu-ctp.github.io/6m-data-3.2-Probability-Statistics-for-Machine-Learning/) |
+| Concept recap (slides) | ~45–60 min | Instructor recaps the key concepts with the lesson slides — you already explored the [interactive key-concepts page](https://su-ntu-ctp.github.io/6m-data-3.2-Probability-Statistics-for-Machine-Learning/) pre-class |
 | Hands-on code-alongs | ~90 min | Three notebooks (~20–30 min each) — Core sections only |
+| Class exit survey | ~15 min | Quick survey to capture what clicked and what didn't — helps shape the next session |
 | (Self-study after class) | self-paced | Each notebook has a 🟡 Extension section for going deeper |
 
-**Why this structure?** Realistic 3-hour pacing means ~1.5 hours of concepts + ~1.5 hours of coding *including Q&A and environment troubleshooting*. Each in-class notebook ends at a clearly marked 🟡 Extension boundary — anything below the line is for self-study, not class time.
+**Why this structure?** Realistic 3-hour pacing means ~1 hour of slide-based concept recap + ~1.5 hours of coding *including Q&A and environment troubleshooting*, closing with a 15-minute exit survey. Each in-class notebook ends at a clearly marked 🟡 Extension boundary — anything below the line is for self-study, not class time.
 
 ---
 
@@ -64,7 +65,7 @@ This lesson follows a three-phase flow. Work through the phases in order.
 You will:
 - Open and run [`notebooks/01_monday_morning.ipynb`](./notebooks/01_monday_morning.ipynb) (~15 min) — Sarah's Monday morning, Priya's pushback, mean vs median
 - Reflect on what surprised you
-- Watch two short videos and preview the key concepts
+- Watch two short videos, then explore the [**interactive key-concepts page**](https://su-ntu-ctp.github.io/6m-data-3.2-Probability-Statistics-for-Machine-Learning/) (GitHub Pages)
 - Try three mini-exercises with sample answers
 
 ---
@@ -75,7 +76,7 @@ You will:
 
 **Short reference & review →** [**lesson.md**](./lesson.md) (overview, key takeaways, honest-reporting checklist, 10-question review, L02→L10 course map)
 
-**Interactive walkthrough →** the [**key concepts page**](https://su-ntu-ctp.github.io/6m-data-3.2-Probability-Statistics-for-Machine-Learning/) (hosted on GitHub Pages) gives an in-browser tour of the core ideas.
+**Need a recap? →** the [**key concepts page**](https://su-ntu-ctp.github.io/6m-data-3.2-Probability-Statistics-for-Machine-Learning/) you explored pre-class is there to revisit any time.
 
 **Notebooks — run in order:**
 
@@ -83,7 +84,7 @@ You will:
 |---|---|---|---|
 | 02 | [`02_distributions.ipynb`](./notebooks/02_distributions.ipynb) | Tuesday | Distribution shapes · normal vs skewed · Z-scores |
 | 03 | [`03_confidence_intervals.ipynb`](./notebooks/03_confidence_intervals.ipynb) | Wednesday | Sampling · the CLT · confidence intervals |
-| 04 | [`04_ab_testing.ipynb`](./notebooks/04_ab_testing.ipynb) | Thursday | A/B testing · p-values · effect size · the three mis-readings |
+| 04 | [`04_hypothesis_testing.ipynb`](./notebooks/04_hypothesis_testing.ipynb) | Thursday | A/B testing · p-values · effect size · the three mis-readings |
 
 Each notebook opens with a business scenario, guides you through the code with **Pause & Predict** prompts, and ends with a summary table and reflection. Read every markdown cell, not just the code.
 
@@ -130,12 +131,12 @@ lesson.md                           ← Short reference: overview, takeaways, ho
 reference.md                        ← Phase 3: Further reading + glossary (~25 terms)
 environment.yml                     ← Conda environment spec (scipy + statsmodels included)
 docs/
-  index.html                        ← Interactive key-concepts walkthrough (served at https://su-ntu-ctp.github.io/6m-data-3.2-Probability-Statistics-for-Machine-Learning/ via GitHub Pages)
+  index.html                        ← Interactive key-concepts page — explore during pre-class (served at https://su-ntu-ctp.github.io/6m-data-3.2-Probability-Statistics-for-Machine-Learning/ via GitHub Pages)
 notebooks/
   01_monday_morning.ipynb           ← Pre-class hook: Sarah's Monday (~15 min, before class)
   02_distributions.ipynb            ← Part 1: Distributions (Tuesday, in class)
   03_confidence_intervals.ipynb     ← Part 2: Confidence Intervals (Wednesday, in class)
-  04_ab_testing.ipynb               ← Part 3: A/B Testing (Thursday, in class)
+  04_hypothesis_testing.ipynb               ← Part 3: A/B Testing (Thursday, in class)
   assignment.ipynb                  ← After class: Lakeside Bank + hospital exercises
   optional_extensions.ipynb         ← 🟡 Optional: Bayes · t-test derivation · bootstrapping · CLT
 ```

@@ -14,7 +14,9 @@ This is the simplest version of "show up prepared": watch a short intro video, r
 
 ## Step 0 — Watch the intro video (~5 min)
 
-Before you open the notebook, watch the short intro video: **[L02 The Analyst s Defense](https://youtu.be/HNuzkM8quzA)**. It's under 5 minutes and frames the problem you're about to solve. Watching this first makes the notebook click faster.
+Before you open the notebook, watch the short intro video: **[L02 The Analyst's Defense](https://youtu.be/HNuzkM8quzA)**. It's under 5 minutes and frames the problem you're about to solve. Watching this first makes the notebook click faster.
+
+🕹️ **After the video:** open the [interactive key-concepts page](https://su-ntu-ctp.github.io/6m-data-3.2-Probability-Statistics-for-Machine-Learning/) and play with it for 10–15 minutes. Drag the sliders, click the buttons — you can't break anything. Arriving in class having *seen* these ideas move makes the session far easier.
 
 ---
 

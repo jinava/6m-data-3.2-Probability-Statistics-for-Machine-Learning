@@ -1,6 +1,6 @@
 # Lesson — L02 Probability & Statistics for Machine Learning
 
-> **Chapter 2 of the NorthStar Retail story.** *Sarah Chen · Customer Experience Analyst · January 2023.*
+> **Chapter 2 of the NorthStar Retail story.** *Sarah Chen · Customer Experience Analyst · Week 3.*
 > Friday afternoon, Priya asked: *"Your model says 60% of reviews are positive. But are the positive ones actually positive? How do we know we can trust that number?"*
 > Sarah didn't have an answer. This lesson is how she gets one.
 
@@ -15,7 +15,7 @@ This document is a **short reference** — the lesson itself is taught in the no
 | **Pre-class** | `pre-class.md` + `notebooks/01_monday_morning.ipynb` |
 | **In-class — Part 1: Distributions** | `notebooks/02_distributions.ipynb` |
 | **In-class — Part 2: CLT + Confidence Intervals** | `notebooks/03_confidence_intervals.ipynb` |
-| **In-class — Part 3: Hypothesis Testing (A/B testing as worked example)** | `notebooks/04_ab_testing.ipynb` |
+| **In-class — Part 3: Hypothesis Testing (A/B testing as worked example)** | `notebooks/04_hypothesis_testing.ipynb` |
 | **Self-study** | `notebooks/assignment.ipynb` + `notebooks/optional_extensions.ipynb` |
 | **Reference & review** | This document |
 
@@ -53,6 +53,7 @@ Skip any of these and you have confident-sounding nonsense — the most expensiv
 
 ---
 
+<<<<<<< HEAD
 ## <span style="color:green">[Opus 4.8]</span> Deep dive: "84% accuracy" vs "84% (95% CI: 78–89%)"
 
 This unpacks Key Takeaway #4 line by line, because it is the single most important reporting habit in the course.
@@ -155,6 +156,38 @@ Note the deliberate wording in Takeaway #6: **"reject"** on one side, but only *
 ### The one-sentence version for an executive
 
 > *"If the coupon really did nothing, we'd see a swing this big only about 4% of the time — that's unlikely enough that we believe the coupon genuinely helps. (Next question: is the effect big enough to be worth it?)"*
+=======
+## Key concepts — plain-English review
+
+A quick self-check before the review questions. Read each concept; if any feels fuzzy, jump back to the notebook Part that teaches it.
+
+**Distribution** — The shape you see when you line up all your values: are they bunched in the middle, stretched to one side, or split into two humps? The shape decides which summary numbers you can trust.
+*Real-world use:* House prices in a city are stretched to the right by a few mansions — so "average price" overstates what a typical home costs.
+
+**Mean vs median** — The mean is the arithmetic average; the median is the middle value when everything is sorted. A few extreme values drag the mean but barely move the median.
+*Real-world use:* NorthStar's "average spend per order" of £85 is inflated by a handful of corporate bulk orders — the median tells Priya what a typical customer spends.
+
+**Standard deviation and Z-scores** — Standard deviation measures how spread out values are. A Z-score says how many standard deviations a value sits from the mean; beyond about 3 is "unusual, investigate."
+*Real-world use:* A hospital flags a patient's lab result as abnormal because it is far outside the normal spread — the same Z-score logic.
+
+**Sampling** — You almost never measure everyone, so you measure a sample and estimate from it. Different samples give slightly different answers — that wobble is why we need the rest of this lesson.
+*Real-world use:* A polling company asks 1,000 voters, not all 40 million, then estimates the national picture.
+
+**Central Limit Theorem (CLT)** — Even when the raw data is messy or lopsided, the *averages of samples* settle into a predictable bell shape once samples are big enough (roughly 30+). This is the engine that makes the next two tools legal.
+*Real-world use:* Individual insurance claims are wildly skewed, but an insurer can still predict its average monthly payout with confidence.
+
+**Confidence interval** — An honest range around any number computed from a sample: "84% accuracy (95% CI: 78–89%)" says the true value most likely sits in that band. Bigger samples give tighter bands.
+*Real-world use:* Sarah reporting her model's accuracy to Priya with a range, not a single confident-sounding number.
+
+**Hypothesis test and p-value** — A way to ask "could this difference be pure luck?" A small p-value (below 0.05) means chance alone is an unlikely explanation; a large one means you don't have enough evidence — which is *not* proof of no effect.
+*Real-world use:* A drug trial deciding whether patients on the new medicine really recovered faster than those on the placebo.
+
+**Effect size** — How *big* the difference is, in real units — separate from whether it is statistically real. Huge samples can make trivial differences "significant."
+*Real-world use:* A streaming app finds a new layout lifts watch time by 0.4 seconds, p < 0.001 — statistically solid, practically worthless.
+
+**A/B test** — Randomly split people into two groups, change one thing for one group, compare one outcome metric, then read the result with a p-value *and* an effect size.
+*Real-world use:* NorthStar's "easy returns" banner test; airlines and news sites run the same experiment on prices and headlines every day.
+>>>>>>> upstream/main
 
 ---
 
@@ -235,5 +268,7 @@ L02 is the lens every later lesson is read through — whenever you report a mod
 ---
 
 > *"OK, the sentiment model holds up. But you used a pre-trained one — off the shelf. Can you build us a model that predicts churn from our own customer data? Something we actually trained on NorthStar behaviour?"* — Marcus, after Sarah's Friday presentation.
+
+With that question, Sarah moves onto Marcus's machine-learning project full-time. Priya stays her line manager for the customer-experience work, and Aisha's team keeps feeding new reviews into the sentiment dashboard — but from here on, the briefs come from Marcus.
 >
 > That question — *can I build a model?* — is the engine of **L03 (Supervised Learning)**.
